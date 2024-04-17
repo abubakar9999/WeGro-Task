@@ -13,6 +13,7 @@ void main() async {
   await Firebase.initializeApp();
   await Hive.initFlutter();
   await Hive.openBox('login_info');
+  await Hive.openBox('add_to_cart');
   runApp(const MyApp());
 }
 
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
       
        providers: [...AllBlocProviders.getAllBlocProviders],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(
           // This is the theme of your application.
@@ -42,6 +44,7 @@ class MyApp extends StatelessWidget {
           '/login': (context) => LoginPage(),
           '/signUp': (context) => SingupPage(),
           '/home': (context) => HomePage(),
+          '/details': (context) => HomePage(),
         },
       ),
     );
