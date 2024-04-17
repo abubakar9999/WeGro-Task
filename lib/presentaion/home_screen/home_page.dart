@@ -43,18 +43,21 @@ class _HomePageState extends State<HomePage> {
                           onTap: () =>Navigator.push(context, MaterialPageRoute(builder: (context)=>ProuductDetailsScreen(productModel: state.products[index],index: index,))) ,
                           child: Card(
                             color: Colors.white,
-                            child: Column(
-                              children: [
-                             Expanded(flex: 5, child: Hero(tag:state.products[index].image,child: Image.network(state.products[index].image,fit: BoxFit.contain,width: double.maxFinite,))) , 
-                              Expanded(child: Text(state.products[index].title,style:const TextStyle(overflow: TextOverflow.ellipsis,fontSize: 16,),)),
-                                Expanded(child: Center(child: Row(
-                                  children: [
-                                    Text(" ৳ ",style: TextStyle(color: Color.fromARGB(255, 255, 60, 0),fontSize: 20),),
-                                    Text(state.products[index].price.toString(),style:  TextStyle(color: Color.fromARGB(255, 255, 60, 0),fontSize: 20)),
-                          
-                                  ],
-                                ))),
-                              ],
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                               Expanded(flex: 5, child: Hero(tag:state.products[index].image,child: Image.network(state.products[index].image,fit: BoxFit.contain,width: double.maxFinite,))) , 
+                                Expanded(child: Text(state.products[index].title,style:const TextStyle(overflow: TextOverflow.ellipsis,fontSize: 16,),)),
+                                  Expanded(child: Center(child: Row(
+                                    children: [
+                                      Text(" ৳ ",style: TextStyle(color: Color.fromARGB(255, 255, 60, 0),fontSize: 20),),
+                                      Text(state.products[index].price.toString(),style:  TextStyle(color: Color.fromARGB(255, 255, 60, 0),fontSize: 20)),
+                                                        
+                                    ],
+                                  ))),
+                                ],
+                              ),
                             ),
                           ),
                         );

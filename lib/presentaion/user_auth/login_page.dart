@@ -34,7 +34,8 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    loginBloc.add(LoginLodingEvent(isloading: false));
+    BlocProvider.of<LoginBloc>(context).add(LoginLodingEvent(isloading: false));
+   
   }
 
   @override
@@ -157,13 +158,13 @@ class _LoginPageState extends State<LoginPage> {
       CommonFunctions().showToast(message: "InValid Email");
     }
 
-    loginBloc.add(LoginLodingEvent(isloading: true));
+     BlocProvider.of<LoginBloc>(context).add(LoginLodingEvent(isloading: true));
 
     String email = _emailController.text;
     String password = _passwordController.text;
 
     User? user = await _auth.signInWithEmailAndPassword(email, password);
-    loginBloc.add(LoginLodingEvent(isloading: false));
+ BlocProvider.of<LoginBloc>(context).add(LoginLodingEvent(isloading: false));
 
     if (user != null) {
       // print("User Log in Successfully");
