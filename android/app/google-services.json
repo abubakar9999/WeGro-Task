@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "17218799029",
+    "project_id": "socialmeadia-66e1a",
+    "storage_bucket": "socialmeadia-66e1a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:17218799029:android:ae38e64d2a8bce380f05fc",
+        "android_client_info": {
+          "package_name": "com.example.wegrow_task_flutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "17218799029-jp5k4krf38e1vp87njta8f795o68j149.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNAeJV6fexSNZDI1IQLeMVyF5YdKJLeZM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "17218799029-jp5k4krf38e1vp87njta8f795o68j149.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
