@@ -19,7 +19,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       
       try {
         print(e['product'].runtimeType);
-          data.add(productModelFromJson(e['product']) as ProductModel);
+          data.add(productModelToJson(e['product']) as ProductModel);
 
      
       } catch (e) {
