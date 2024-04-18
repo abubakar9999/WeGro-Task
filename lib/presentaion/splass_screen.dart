@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:wegrow_task_flutter/core/utils/boxes.dart';
 import 'package:wegrow_task_flutter/presentaion/home_screen/home_page.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -13,8 +14,8 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    String mail = Hive.box('login_info').get('mail').toString();
-    String pass = Hive.box('login_info').get('pass').toString();
+    String mail = HiveBox().logInfo.get('mail').toString();
+    String pass = HiveBox().logInfo.get('pass').toString();
 
     Future.delayed(const Duration(seconds: 3), () {
       if (mail != "null" && pass != "null") {

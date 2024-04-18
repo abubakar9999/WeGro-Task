@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:wegrow_task_flutter/core/utils/boxes.dart';
 import 'package:wegrow_task_flutter/core/utils/firebase_auth_implementation/firebase_auth_services.dart';
 import 'package:wegrow_task_flutter/core/utils/validation_functions.dart';
 import 'package:wegrow_task_flutter/domain/common_functions/common_functions.dart';
@@ -169,8 +170,8 @@ class _LoginPageState extends State<LoginPage> {
     if (user != null) {
       // print("User Log in Successfully");
       CommonFunctions().showToast(message: "Log In Successfully");
-      await Hive.box('login_info').put('mail', _emailController.text.toString());
-      await Hive.box('login_info').put('pass', _passwordController.text.toString());
+      await HiveBox().logInfo.put('mail', _emailController.text.toString());
+      await HiveBox().logInfo.put('pass', _passwordController.text.toString());
       Navigator.pushNamed(context, "/home");
     } else {
       CommonFunctions().showToast(message: "Log In Failed");
