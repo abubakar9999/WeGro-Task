@@ -11,7 +11,8 @@ import 'package:wegrow_task_flutter/presentaion/cart_screen/cart_screen.dart';
 class ProuductDetailsScreen extends StatefulWidget {
   ProductModel productModel;
   int index;
-  ProuductDetailsScreen({required this.productModel, required this.index, super.key});
+  ProuductDetailsScreen(
+      {required this.productModel, required this.index, super.key});
 
   @override
   State<ProuductDetailsScreen> createState() => _ProuductDetailsScreenState();
@@ -20,8 +21,9 @@ class ProuductDetailsScreen extends StatefulWidget {
 class _ProuductDetailsScreenState extends State<ProuductDetailsScreen> {
   @override
   Widget build(BuildContext context) {
-    final existingBookMark = Hive.box('add_to_cart').get('addedData', defaultValue: {});
-    final modifiedBookMark = Map.from(existingBookMark);
+    final existingAddtoCart =
+        Hive.box('add_to_cart').get('addedData', defaultValue: {});
+    final modifiedAddToCart = Map.from(existingAddtoCart);
     return Scaffold(
       appBar: AppBar(
         title: Text('Product Details'),
@@ -32,13 +34,20 @@ class _ProuductDetailsScreenState extends State<ProuductDetailsScreen> {
               CircleAvatar(
                   radius: 10,
                   child: Text(
-                  Hive.box('add_to_cart').get('addedData')!=null?  Hive.box('add_to_cart').get('addedData').values.toList().length.toString():0.toString(),
+                    Hive.box('add_to_cart').get('addedData') != null
+                        ? Hive.box('add_to_cart')
+                            .get('addedData')
+                            .values
+                            .toList()
+                            .length
+                            .toString()
+                        : 0.toString(),
                     style: TextStyle(fontSize: 10),
                   )),
               IconButton(
                   onPressed: () {
-               
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>CartScreen()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => CartScreen()));
                   },
                   icon: Icon(Icons.shopping_cart_outlined)),
             ],
@@ -47,7 +56,10 @@ class _ProuductDetailsScreenState extends State<ProuductDetailsScreen> {
       ),
       body: Column(
         children: <Widget>[
-          Expanded(child: Hero(tag: widget.productModel.image, child: Image.network(widget.productModel.image))),
+          Expanded(
+              child: Hero(
+                  tag: widget.productModel.image,
+                  child: Image.network(widget.productModel.image))),
           Expanded(
               child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -73,33 +85,43 @@ class _ProuductDetailsScreenState extends State<ProuductDetailsScreen> {
                     ),
                     IconButton(
                       onPressed: () async {
-                        if (modifiedBookMark.containsKey('${widget.index}')) {
-                          modifiedBookMark.remove('${widget.index}');
-                          CommonFunctions().showToast(message: "bookMark_removed");
+                        print('////////////////////////');
+                        print(modifiedAddToCart.toString());
+                        if (modifiedAddToCart.containsKey('${widget.index}')) {
+                          modifiedAddToCart.remove('${widget.index}');
+                          CommonFunctions()
+                              .showToast(message: "Item remove success");
                         } else {
-                          modifiedBookMark['${widget.index}'] = {
+                          modifiedAddToCart['${widget.index}'] = {
                             'productIndex': widget.index,
                             'product': jsonEncode(widget.productModel),
                           };
-                          CommonFunctions().showToast(message: "bookMark_add");
+                          CommonFunctions()
+                              .showToast(message: "Item add success");
                         }
-                        await Hive.box('add_to_cart').put('addedData', modifiedBookMark);
+                        await Hive.box('add_to_cart')
+                            .put('addedData', modifiedAddToCart);
 
                         setState(() {});
                       },
-                      icon: Hive.box('add_to_cart').get('addedData') != null && Hive.box('add_to_cart').get('addedData').containsKey('${widget.index}')
+                      icon: Hive.box('add_to_cart').get('addedData') != null &&
+                              Hive.box('add_to_cart')
+                                  .get('addedData')
+                                  .containsKey('${widget.index}')
                           ? Icon(
                               Icons.favorite,
                               color: Colors.green,
                               size: 20,
                             )
-                          : Icon(Icons.favorite_border, size: 20, color: Colors.green),
+                          : Icon(Icons.favorite_border,
+                              size: 20, color: Colors.green),
                     ),
                   ],
                 ),
                 Text(
                   widget.productModel.title,
-                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.bold),
                 ),
                 Text(widget.productModel.description)
               ],

@@ -12,30 +12,62 @@ part 'cart_state.dart';
 class CartBloc extends Bloc<CartEvent, CartState> {
   CartBloc() : super(CartInitial()) {
     on<CartItemsLoadedEvent>((event, emit) {
+      List<dynamic> data = [];
       // List data= Hive.box('add_to_cart').get('addedData').values.toList();
-      List<ProductModel> data=[];
-   
-     Hive.box('add_to_cart').get('addedData').values.forEach((e){
-      
-      try {
-        print(e['product'].runtimeType);
-          data.add(productModelToJson(e['product']) as ProductModel);
+      log(Hive.box('add_to_cart').get('addedData').toString(),
+          name: "all Data");
+      Hive.box('add_to_cart').get('addedData').values.forEach((e) {
+        print(e);
+        try {
+          data.add(e['product']);
+        } catch (e) {
+          print('Error: $e');
+        }
+      });
+      print(productModelFromJson(data.toString()).first.title);
 
-     
-      } catch (e) {
-        log(e.toString());
-        
-      }
-    
-     });
-     
-     log(data.toString(),name: "my Data");
-    // print(Hive.box('add_to_cart').get('addedData').values['product']);
-      // print(data);
+      emit(
+          CartItemsLoadedState(product: productModelFromJson(data.toString())));
+    });
 
-     emit(CartItemsLoadedState(productModel: data));
+    on<CartItemsDeleteEvent>((event, emit) {
+      // List data= Hive.box('add_to_cart').get('addedData').values.toList();
 
-   
+      print(
+          "DEdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd");
+
+      Hive.box('add_to_cart').get('addedData').forEach((key, val) {
+        print(val);
+        // val.forEach((e,f) {
+
+        print('---------------');
+        Map<String, dynamic> m = jsonDecode(val['product']);
+        print(m['id']);
+
+        if (m['id'] == event.id) {
+          print('mmmmmmmmmmmmmmmmmmmmmmmmmm$key');
+          // Map<dynamic, dynamic> fulldata =
+          //     jsonDecode(Hive.box('add_to_cart').get('addedData').toString());
+          Hive.box('add_to_cart').get('addedData').remove(key);
+          // fulldata.remove(key);
+          print('remove successsss');
+          return;
+        }
+        // });
+        print('=========================');
+        print(key);
+      });
+
+      // Hive.box('add_to_cart').get('addedData').values.forEach((e) {
+      //   // Map<String, dynamic> product = e['product'] as Map<String, dynamic>;
+      //   print('---------------');
+      //   Map<String, dynamic> m = jsonDecode(e['product']);
+      //   print(m['id']);
+
+      // });
+
+      // emit(
+      //     CartItemsLoadedState(product: productModelFromJson(data.toString())));
     });
   }
 }
