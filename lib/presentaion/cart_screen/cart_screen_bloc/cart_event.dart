@@ -6,6 +6,6 @@ abstract class CartEvent {}
 class CartItemsLoadedEvent extends CartEvent {}
 
 class CartItemsDeleteEvent extends CartEvent {
-  String id;
+  int id;
   CartItemsDeleteEvent({required this.id});
 }

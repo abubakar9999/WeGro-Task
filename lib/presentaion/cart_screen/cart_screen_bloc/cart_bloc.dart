@@ -29,14 +29,29 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       emit(CartItemsLoadedState(product: productModelFromJson(data.toString())));
     });
 
-    on<CartItemsDeleteEvent>((event, emit)async {
+    on<CartItemsDeleteEvent>((event, emit) async {
+      final existingAddtoCart = HiveBox().addToCart.get('addedData', defaultValue: {});
+      final modifiedAddToCart = Map.from(existingAddtoCart);
+      List<int> keysToRemove = [];
 
+      modifiedAddToCart.forEach((key, value) {
+        Map<String, dynamic> product = jsonDecode(value['product']);
+        // print(product['id']);
 
+        if (product['id'] == event.id) {
+          print('Product ID matched, preparing to remove: ${product['id']}');
+          keysToRemove.add(int.tryParse(key) ?? 0);
+        }
+      });
 
+      // Remove the collected keys from the map
+      for (var key in keysToRemove) {
+        modifiedAddToCart.remove(key.toString());
+        print('Removed product with key $key from cart$modifiedAddToCart');
+      }
 
-
-
-
+      print('%%%%%%%%%%%%%%%%%%$modifiedAddToCart');
+      await HiveBox().addToCart.put('addedData', modifiedAddToCart);
 
       // HiveBox().addToCart.get('addedData').forEach((key, val) {
       //   print(val);

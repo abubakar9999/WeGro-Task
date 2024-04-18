@@ -2,12 +2,14 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:wegrow_task_flutter/core/utils/boxes.dart';
 import 'package:wegrow_task_flutter/domain/common_functions/common_functions.dart';
 import 'package:wegrow_task_flutter/models/product_model.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:wegrow_task_flutter/presentaion/cart_screen/cart_screen.dart';
+import 'package:wegrow_task_flutter/presentaion/cart_screen/cart_screen_bloc/cart_bloc.dart';
 
 class ProuductDetailsScreen extends StatefulWidget {
   ProductModel productModel;
@@ -86,8 +88,9 @@ class _ProuductDetailsScreenState extends State<ProuductDetailsScreen> {
                           CommonFunctions().showToast(message: "Item add success");
                         }
                         await HiveBox().addToCart.put('addedData', modifiedAddToCart);
+                         BlocProvider.of<CartBloc>(context).add(CartItemsLoadedEvent());
 
-                        setState(() {});
+                         setState(() {});
                       },
                       icon: HiveBox().addToCart.get('addedData') != null && HiveBox().addToCart.get('addedData').containsKey('${widget.index}')
                           ? Icon(

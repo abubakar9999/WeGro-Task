@@ -6,6 +6,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:wegrow_task_flutter/core/utils/boxes.dart';
 import 'package:wegrow_task_flutter/core/utils/color_constant.dart';
 import 'package:wegrow_task_flutter/presentaion/cart_screen/cart_screen.dart';
+import 'package:wegrow_task_flutter/presentaion/cart_screen/cart_screen_bloc/cart_bloc.dart';
 import 'package:wegrow_task_flutter/presentaion/details_screen/product_details.dart';
 import 'package:wegrow_task_flutter/presentaion/home_screen/home_screen_bloc/home_bloc.dart';
 
@@ -22,6 +23,7 @@ class _HomePageState extends State<HomePage> {
     // TODO: implement initState
     super.initState();
     BlocProvider.of<HomeBloc>(context).add(HomeLoadedEvent());
+  HiveBox().addToCart.get('addedData') != null ?  BlocProvider.of<CartBloc>(context).add(CartItemsLoadedEvent()):const SizedBox.shrink();
   }
 
   @override
@@ -30,31 +32,32 @@ class _HomePageState extends State<HomePage> {
         appBar: AppBar(
           title: Text("Home"),
           actions: [
-            Stack(
-              alignment: Alignment.topRight,
-              children: [
-                CircleAvatar(
-                    radius: 10,
-                    child: Text(
-                      HiveBox().addToCart.get('addedData') != null
-                          ? HiveBox().addToCart
-                              .get('addedData')
-                              .values
-                              .toList()
-                              .length
-                              .toString()
-                          : 0.toString(),
-                      style: TextStyle(fontSize: 10),
-                    )),
-                IconButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => CartScreen()));
-                    },
-                    icon: Icon(Icons.shopping_cart_outlined)),
-              ],
+            BlocBuilder<CartBloc, CartState>(
+              builder: (context, state) {
+                if(state is CartItemsLoadedState){
+                  return Stack(
+                  alignment: Alignment.topRight,
+                  children: [
+                    CircleAvatar(
+                        radius: 10,
+                        child: Text(
+                          state.product.length.toString(),
+                         // HiveBox().addToCart.get('addedData') != null ? HiveBox().addToCart.get('addedData').values.toList().length.toString() : 0.toString(),
+                          style: TextStyle(fontSize: 10),
+                        )),
+                    IconButton(
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => CartScreen()));
+                        },
+                        icon: Icon(Icons.shopping_cart_outlined)),
+                  ],
+                );
+                }else{
+                  return SizedBox.shrink();
+                }
+
+            
+              },
             )
           ],
         ),
@@ -65,8 +68,7 @@ class _HomePageState extends State<HomePage> {
                 if (state is HomeLoadedState) {
                   return Expanded(
                     child: GridView.builder(
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
                         ),
                         itemCount: state.products.length,
@@ -108,18 +110,9 @@ class _HomePageState extends State<HomePage> {
                                       children: [
                                         Text(
                                           " ৳ ",
-                                          style: TextStyle(
-                                              color: Color.fromARGB(
-                                                  255, 255, 60, 0),
-                                              fontSize: 20),
+                                          style: TextStyle(color: Color.fromARGB(255, 255, 60, 0), fontSize: 20),
                                         ),
-                                        Text(
-                                            state.products[index].price
-                                                .toString(),
-                                            style: TextStyle(
-                                                color: Color.fromARGB(
-                                                    255, 255, 60, 0),
-                                                fontSize: 20)),
+                                        Text(state.products[index].price.toString(), style: TextStyle(color: Color.fromARGB(255, 255, 60, 0), fontSize: 20)),
                                       ],
                                     ))),
                                   ],

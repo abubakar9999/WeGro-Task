@@ -26,14 +26,6 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final existingAddtoCart = HiveBox().addToCart.get('addedData', defaultValue: {});
-    final modifiedAddToCart = Map.from(existingAddtoCart);
-
-    // print("In Ui *****************************");
-
-    // print(modifiedAddToCart);
-    // print("In Ui *****************************");
-
     return Scaffold(
       appBar: AppBar(
         title: const Text("My Cart"),
@@ -44,58 +36,43 @@ class _CartScreenState extends State<CartScreen> {
             if (state is CartItemsLoadedState) {
               // print('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
               // print(state.product.length);
-              return state.product.isNotEmpty? Expanded(
-                child: ListView.builder(
-                    itemCount: state.product.length,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Card(
-                          child: ListTile(
-                            contentPadding: EdgeInsets.zero,
-                            horizontalTitleGap: 7,
-                            dense: false,
-                            minVerticalPadding: 0,
-                            titleAlignment: ListTileTitleAlignment.titleHeight,
-                            leading: Image.network(
-                              state.product[index].image,
-                              height: 100,
-                              width: 70,
-                              fit: BoxFit.cover,
-                            ),
-                            title: Text(state.product[index].title),
-                            subtitle: Text("৳-${state.product[index].price}"),
-                            trailing: IconButton(
-                              onPressed: () async {
-                                List<int> keysToRemove = [];
-
-                                modifiedAddToCart.forEach((key, value) {
-                                  Map<String, dynamic> product = jsonDecode(value['product']);
-                                  // print(product['id']);
-
-                                  if (product['id'] == state.product[index].id) {
-                                    print('Product ID matched, preparing to remove: ${product['id']}');
-                                    keysToRemove.add(int.tryParse(key) ?? 0);
-                                  }
-                                });
-
-                                // Remove the collected keys from the map
-                                for (var key in keysToRemove) {
-                                  modifiedAddToCart.remove(key.toString());
-                                  print('Removed product with key $key from cart$modifiedAddToCart');
-                                }
-                                await HiveBox().addToCart.put('addedData', modifiedAddToCart);
-
-                                BlocProvider.of<CartBloc>(context).add(CartItemsLoadedEvent());
-                              
-                              },
-                              icon: const Icon(Icons.delete),
-                            ),
-                          ),
-                        ),
-                      );
-                    }),
-              ):const Center(child: Text("No Data"),);
+              return state.product.isNotEmpty
+                  ? Expanded(
+                      child: ListView.builder(
+                          itemCount: state.product.length,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Card(
+                                child: ListTile(
+                                  contentPadding: EdgeInsets.zero,
+                                  horizontalTitleGap: 7,
+                                  dense: false,
+                                  minVerticalPadding: 0,
+                                  titleAlignment: ListTileTitleAlignment.titleHeight,
+                                  leading: Image.network(
+                                    state.product[index].image,
+                                    height: 100,
+                                    width: 70,
+                                    fit: BoxFit.cover,
+                                  ),
+                                  title: Text(state.product[index].title),
+                                  subtitle: Text("৳-${state.product[index].price}"),
+                                  trailing: IconButton(
+                                    onPressed: () {
+                                      BlocProvider.of<CartBloc>(context).add(CartItemsDeleteEvent(id: state.product[index].id));
+                                      BlocProvider.of<CartBloc>(context).add(CartItemsLoadedEvent());
+                                    },
+                                    icon: const Icon(Icons.delete),
+                                  ),
+                                ),
+                              ),
+                            );
+                          }),
+                    )
+                  : const Center(
+                      child: Text("No Data"),
+                    );
             } else {
               return const CircularProgressIndicator();
             }
