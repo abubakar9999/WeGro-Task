@@ -1,16 +1,56 @@
-# wegrow_task_flutter
+# wegrow_task_flutter f
 
-A new Flutter project.
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+## Project Requerment 
+### ● Firebase Authentication:
+Implement Firebase authentication with the ability for users to sign in and sign up
+(Email/Password and a Social Login e.g., Google).
+Ensure a secure and user-friendly authentication flow.
 
-A few resources to get you started if this is your first Flutter project:
+### Ans:
+*Implement Firebase authentication =>added
+*sign in and sign up with firebase => added
+*google login => added
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+### ● Home Page - Product Grid:
+Fetch and display a grid of products from the FakeStoreAPI on the home page.
+Each product item in the grid should include product image, title, and price.
+Implement a navigation system to move from the home page to the product detail page.
+
+### Ans:
+*Fetch Api in fakeStore in home screen =>added
+*show product image, title, and price in grid => added
+*navigation system to move from the home page to the product detail page => added
+
+
+### ● Product Detail Page:
+Create a detailed page for each product that includes information fetched from the
+product detail API.
+Add a favorite icon on the product detail page to allow users to mark the product as a
+favorite.
+
+### Ans:
+* product detail screen =>added
+*Add a favorite icon on the product detail and functions => added
+
+
+### ● Favorites Module:
+Implement a separate page for viewing and managing favorite products.
+Store favorite products locally using device storage (e.g. SQFLite, Hive etc.).
+Provide functionality to add or remove products from the favorites list.
+Important: Please ensure the consistent use of a robust state management solution, such as
+Provider, Riverpod, GetX, or BLOC across the entire project.
+
+
+### Ans:
+*  managing favorite products =>added 
+* save products in local storage(Hive) => added
+* state management=> added ######(Bloc)
+
+
+
+
+
