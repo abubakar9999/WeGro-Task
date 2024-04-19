@@ -1,4 +1,4 @@
-# wegrow_task_flutter f
+# wegrow_task_flutter
 
 
 
@@ -9,8 +9,8 @@ Implement Firebase authentication with the ability for users to sign in and sign
 Ensure a secure and user-friendly authentication flow.
 
 ### Ans:
-*Implement Firebase authentication =>added
-*sign in and sign up with firebase => added
+*Implement Firebase authentication =>added\
+*sign in and sign up with firebase => added\
 *google login => added
 
 
@@ -21,9 +21,9 @@ Each product item in the grid should include product image, title, and price.
 Implement a navigation system to move from the home page to the product detail page.
 
 ### Ans:
-*Fetch Api in fakeStore in home screen =>added
-*show product image, title, and price in grid => added
-*navigation system to move from the home page to the product detail page => added
+*Fetch Api in fakeStore in home screen =>added\
+*show product image, title, and price in grid => added\
+*navigation system to move from the home page to the product detail page => added\
 
 
 ### ● Product Detail Page:
@@ -33,8 +33,8 @@ Add a favorite icon on the product detail page to allow users to mark the produc
 favorite.
 
 ### Ans:
-* product detail screen =>added
-*Add a favorite icon on the product detail and functions => added
+* product detail screen =>added\
+*Add a favorite icon on the product detail and functions => added\
 
 
 ### ● Favorites Module:
@@ -46,8 +46,8 @@ Provider, Riverpod, GetX, or BLOC across the entire project.
 
 
 ### Ans:
-*  managing favorite products =>added 
-* save products in local storage(Hive) => added
+*  managing favorite products =>added \
+* save products in local storage(Hive) => added\
 * state management=> added ######(Bloc)
 
 
