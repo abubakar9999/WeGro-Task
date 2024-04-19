@@ -23,7 +23,7 @@ Implement a navigation system to move from the home page to the product detail p
 ### Ans:
 *Fetch Api in fakeStore in home screen =>added\
 *show product image, title, and price in grid => added\
-*navigation system to move from the home page to the product detail page => added\
+*navigation system to move from the home page to the product detail page => added
 
 
 ### ● Product Detail Page:
@@ -34,7 +34,7 @@ favorite.
 
 ### Ans:
 * product detail screen =>added\
-*Add a favorite icon on the product detail and functions => added\
+* Add a favorite icon on the product detail and functions => added
 
 
 ### ● Favorites Module:
@@ -50,6 +50,9 @@ Provider, Riverpod, GetX, or BLOC across the entire project.
 * save products in local storage(Hive) => added\
 * state management=> added ######(Bloc)
 
+# User Instuction
+
+"Please log in with your Gmail credentials or Google account. Upon successful login, you'll be directed to the Home page. Note that the back button on the Home page is intended for testing purposes only, not for production. Here, you'll find all products listed with their prices and titles. Click on any product to view its details. You can easily mark items as favorites with a single click on the heart icon, and remove them with another click. Favorited items will be saved to your cart. When you access the cart, you'll see all your favorite items listed, and you can easily delete them from there."
 
 
 
