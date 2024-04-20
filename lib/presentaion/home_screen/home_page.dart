@@ -1,10 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:wegrow_task_flutter/core/utils/boxes.dart';
-import 'package:wegrow_task_flutter/core/utils/color_constant.dart';
 import 'package:wegrow_task_flutter/presentaion/cart_screen/cart_screen.dart';
 import 'package:wegrow_task_flutter/presentaion/cart_screen/cart_screen_bloc/cart_bloc.dart';
 import 'package:wegrow_task_flutter/presentaion/details_screen/product_details.dart';
@@ -20,43 +16,46 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     BlocProvider.of<HomeBloc>(context).add(HomeLoadedEvent());
-  HiveBox().addToCart.get('addedData') != null ?  BlocProvider.of<CartBloc>(context).add(CartItemsLoadedEvent()):const SizedBox.shrink();
+    HiveBox().addToCart.get('addedData') != null
+        ? BlocProvider.of<CartBloc>(context).add(CartItemsLoadedEvent())
+        : const SizedBox.shrink();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Home"),
+          title: const Text("Home"),
+          // leading: const SizedBox.shrink(),
           actions: [
             BlocBuilder<CartBloc, CartState>(
               builder: (context, state) {
-                if(state is CartItemsLoadedState){
+                if (state is CartItemsLoadedState) {
                   return Stack(
-                  alignment: Alignment.topRight,
-                  children: [
-                    CircleAvatar(
-                        radius: 10,
-                        child: Text(
-                          state.product.length.toString(),
-                         // HiveBox().addToCart.get('addedData') != null ? HiveBox().addToCart.get('addedData').values.toList().length.toString() : 0.toString(),
-                          style: TextStyle(fontSize: 10),
-                        )),
-                    IconButton(
-                        onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => CartScreen()));
-                        },
-                        icon: Icon(Icons.shopping_cart_outlined)),
-                  ],
-                );
-                }else{
-                  return SizedBox.shrink();
+                    alignment: Alignment.topRight,
+                    children: [
+                      CircleAvatar(
+                          radius: 10,
+                          child: Text(
+                            state.product.length.toString(),
+                            // HiveBox().addToCart.get('addedData') != null ? HiveBox().addToCart.get('addedData').values.toList().length.toString() : 0.toString(),
+                            style: const TextStyle(fontSize: 10),
+                          )),
+                      IconButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const CartScreen()));
+                          },
+                          icon: const Icon(Icons.shopping_cart_outlined)),
+                    ],
+                  );
+                } else {
+                  return const SizedBox.shrink();
                 }
-
-            
               },
             )
           ],
@@ -68,7 +67,8 @@ class _HomePageState extends State<HomePage> {
                 if (state is HomeLoadedState) {
                   return Expanded(
                     child: GridView.builder(
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
                         ),
                         itemCount: state.products.length,
@@ -83,6 +83,7 @@ class _HomePageState extends State<HomePage> {
                                         ))),
                             child: Card(
                               color: Colors.white,
+                              surfaceTintColor: Colors.white,
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Column(
@@ -108,11 +109,20 @@ class _HomePageState extends State<HomePage> {
                                         child: Center(
                                             child: Row(
                                       children: [
-                                        Text(
+                                        const Text(
                                           " ৳ ",
-                                          style: TextStyle(color: Color.fromARGB(255, 255, 60, 0), fontSize: 20),
+                                          style: TextStyle(
+                                              color: Color.fromARGB(
+                                                  255, 255, 60, 0),
+                                              fontSize: 20),
                                         ),
-                                        Text(state.products[index].price.toString(), style: TextStyle(color: Color.fromARGB(255, 255, 60, 0), fontSize: 20)),
+                                        Text(
+                                            state.products[index].price
+                                                .toString(),
+                                            style: const TextStyle(
+                                                color: Color.fromARGB(
+                                                    255, 255, 60, 0),
+                                                fontSize: 20)),
                                       ],
                                     ))),
                                   ],
@@ -123,7 +133,7 @@ class _HomePageState extends State<HomePage> {
                         }),
                   );
                 } else {
-                  return CircularProgressIndicator();
+                  return const CircularProgressIndicator();
                 }
               },
             ),

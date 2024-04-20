@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class ProgressDialogUtils {
   static bool isProgressVisible = false;
 

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:wegrow_task_flutter/core/utils/boxes.dart';
 import 'package:wegrow_task_flutter/presentaion/home_screen/home_page.dart';
 
@@ -19,11 +18,9 @@ class _SplashScreenState extends State<SplashScreen> {
 
     Future.delayed(const Duration(seconds: 3), () {
       if (mail != "null" && pass != "null") {
-        print(mail);
-        print("******************************");
         Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => HomePage()),
+            MaterialPageRoute(builder: (context) => const HomePage()),
             (route) => false);
       } else {
         Navigator.pushAndRemoveUntil(
@@ -32,7 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
             (route) => false);
       }
     });
-    // TODO: implement initState
+
     super.initState();
   }
 

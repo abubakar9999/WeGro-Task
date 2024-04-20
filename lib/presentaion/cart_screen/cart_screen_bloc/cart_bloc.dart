@@ -1,8 +1,9 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'dart:convert';
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:meta/meta.dart';
 import 'package:wegrow_task_flutter/core/utils/boxes.dart';
 import 'package:wegrow_task_flutter/models/product_model.dart';
@@ -17,20 +18,19 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       // List data= HiveBox().addToCart.get('addedData').values.toList();
       log(HiveBox().addToCart.get('addedData').toString(), name: "all Data");
       HiveBox().addToCart.get('addedData').values.forEach((e) {
-        print(e);
         try {
           data.add(e['product']);
-        } catch (e) {
-          print('Error: $e');
-        }
+          // ignore: empty_catches
+        } catch (e) {}
       });
-      print(productModelFromJson(data.toString()).first.title);
 
-      emit(CartItemsLoadedState(product: productModelFromJson(data.toString())));
+      emit(
+          CartItemsLoadedState(product: productModelFromJson(data.toString())));
     });
 
     on<CartItemsDeleteEvent>((event, emit) async {
-      final existingAddtoCart = HiveBox().addToCart.get('addedData', defaultValue: {});
+      final existingAddtoCart =
+          HiveBox().addToCart.get('addedData', defaultValue: {});
       final modifiedAddToCart = Map.from(existingAddtoCart);
       List<int> keysToRemove = [];
 
@@ -39,7 +39,6 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         // print(product['id']);
 
         if (product['id'] == event.id) {
-          print('Product ID matched, preparing to remove: ${product['id']}');
           keysToRemove.add(int.tryParse(key) ?? 0);
         }
       });
@@ -47,10 +46,8 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       // Remove the collected keys from the map
       for (var key in keysToRemove) {
         modifiedAddToCart.remove(key.toString());
-        print('Removed product with key $key from cart$modifiedAddToCart');
       }
 
-      print('%%%%%%%%%%%%%%%%%%$modifiedAddToCart');
       await HiveBox().addToCart.put('addedData', modifiedAddToCart);
 
       // HiveBox().addToCart.get('addedData').forEach((key, val) {

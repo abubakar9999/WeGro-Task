@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:wegrow_task_flutter/core/utils/firebase_auth_implementation/firebase_auth_services.dart';
@@ -7,6 +9,7 @@ import 'package:wegrow_task_flutter/presentaion/user_auth/login_page.dart';
 import 'widgets/form_container_widget.dart';
 
 class SingupPage extends StatefulWidget {
+  // ignore: use_key_in_widget_constructors
   const SingupPage({Key? key});
 
   @override
@@ -23,7 +26,7 @@ class _SingupPageState extends State<SingupPage> {
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
-    // TODO: implement dispose
+
     super.dispose();
   }
 
@@ -143,7 +146,6 @@ class _SingupPageState extends State<SingupPage> {
       Navigator.pushNamed(context, "/home");
     } else {
       CommonFunctions().showToast(message: "Some Error Happened");
-      print("Some Error Happened.");
     }
   }
 }

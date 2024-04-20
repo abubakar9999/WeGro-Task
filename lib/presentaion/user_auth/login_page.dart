@@ -1,7 +1,9 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:wegrow_task_flutter/core/utils/boxes.dart';
+import 'package:wegrow_task_flutter/core/utils/color_constant.dart';
 import 'package:wegrow_task_flutter/core/utils/firebase_auth_implementation/firebase_auth_services.dart';
 import 'package:wegrow_task_flutter/core/utils/validation_functions.dart';
 import 'package:wegrow_task_flutter/domain/common_functions/common_functions.dart';
@@ -11,6 +13,7 @@ import 'package:wegrow_task_flutter/presentaion/user_auth/signup_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginPage extends StatefulWidget {
+  // ignore: use_key_in_widget_constructors
   const LoginPage({Key? key});
 
   @override
@@ -18,7 +21,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  bool _isSigning = false;
   final FirebaseAuthServices _auth = FirebaseAuthServices();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -33,10 +35,8 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     BlocProvider.of<LoginBloc>(context).add(LoginLodingEvent(isloading: false));
-   
   }
 
   @override
@@ -52,7 +52,8 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text("Login", style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
+              const Text("Login",
+                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
               const SizedBox(
                 height: 20,
               ),
@@ -84,11 +85,10 @@ class _LoginPageState extends State<LoginPage> {
                   child: BlocBuilder<LoginBloc, LoginState>(
                     builder: (context, state) {
                       if (state is LoginLodingStat) {
-                     
-
                         return Center(
                           child: state.isLoading
-                              ? const CircularProgressIndicator(color: Colors.white)
+                              ? const CircularProgressIndicator(
+                                  color: Colors.white)
                               : const Text(
                                   "Login",
                                   style: TextStyle(
@@ -125,26 +125,38 @@ class _LoginPageState extends State<LoginPage> {
                     onTap: () {
                       Navigator.pushAndRemoveUntil(
                         context,
-                        MaterialPageRoute(builder: (context) => const SingupPage()),
+                        MaterialPageRoute(
+                            builder: (context) => const SingupPage()),
                         (route) => false,
                       );
                     },
                     child: const Text(
                       "Signup",
-                      style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          color: Colors.blue, fontWeight: FontWeight.bold),
                     ),
                   )
                 ],
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text("SignIn with Google"),
+                  Text(
+                    "SignIn with Google",
+                    style: TextStyle(color: ConfigColors.mainPrimaryColor),
+                  ),
                   IconButton(
                       onPressed: () async {
-                        FirebaseAuthServices().singInWithGoogle();
+                        await FirebaseAuthServices().singInWithGoogle();
+                        CommonFunctions()
+                            .showToast(message: "Log In Successfully");
                         Navigator.pushNamed(context, "/home");
                       },
-                      icon: const Icon(Icons.interests_outlined)),
+                      icon: Image.asset(
+                        "assets/logo/google.png",
+                        height: 20,
+                        width: 20,
+                      )),
                 ],
               )
             ],
@@ -159,13 +171,13 @@ class _LoginPageState extends State<LoginPage> {
       CommonFunctions().showToast(message: "InValid Email");
     }
 
-     BlocProvider.of<LoginBloc>(context).add(LoginLodingEvent(isloading: true));
+    BlocProvider.of<LoginBloc>(context).add(LoginLodingEvent(isloading: true));
 
     String email = _emailController.text;
     String password = _passwordController.text;
 
     User? user = await _auth.signInWithEmailAndPassword(email, password);
- BlocProvider.of<LoginBloc>(context).add(LoginLodingEvent(isloading: false));
+    BlocProvider.of<LoginBloc>(context).add(LoginLodingEvent(isloading: false));
 
     if (user != null) {
       // print("User Log in Successfully");
@@ -175,7 +187,7 @@ class _LoginPageState extends State<LoginPage> {
       Navigator.pushNamed(context, "/home");
     } else {
       CommonFunctions().showToast(message: "Log In Failed");
-      print("User Log in failed");
+      // print("User Log in failed");
     }
   }
 }

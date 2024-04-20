@@ -9,12 +9,15 @@ class App {
   double? _widthPadding;
 
   App(context) {
+    // ignore: no_leading_underscores_for_local_identifiers
     mat.MediaQueryData _queryData = mat.MediaQuery.of(context);
     _height = _queryData.size.height / 100.0;
     _width = _queryData.size.width / 100.0;
     _originalWidth = _queryData.size.width;
-    _heightPadding = _height! - ((_queryData.padding.top + _queryData.padding.bottom) / 100.0);
-    _widthPadding = _width! - (_queryData.padding.left + _queryData.padding.right) / 100.0;
+    _heightPadding = _height! -
+        ((_queryData.padding.top + _queryData.padding.bottom) / 100.0);
+    _widthPadding =
+        _width! - (_queryData.padding.left + _queryData.padding.right) / 100.0;
   }
 
   double appHeight(double v) {
