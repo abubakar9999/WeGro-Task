@@ -14,7 +14,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "17218799029-jp5k4krf38e1vp87njta8f795o68j149.apps.googleusercontent.com",
+          "client_id": "17218799029-n4srsfta7p16qdo44etubd79u0kdftpc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.wegrow_task_flutter",
+            "certificate_hash": "e832ee6c5adf31a5dfbb4e1677ffea1f7aa91de2"
+          }
+        },
+        {
+          "client_id": "17218799029-m9o323snofb61ms03v8k559r0tthhsi3.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
